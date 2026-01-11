@@ -1,46 +1,16 @@
 add_library(lua STATIC
-    lapi.c
-    lauxlib.c
-    lbaselib.c
-    lcode.c
-    lcorolib.c
-    lctype.c
-    ldblib.c
-    ldebug.c
-    ldo.c
-    ldump.c
-    lfunc.c
-    lgc.c
-    linit.c
-    liolib.c
-    llex.c
-    lmathlib.c
-    lmem.c
-    loadlib.c
-    lobject.c
-    lopcodes.c
-    loslib.c
-    lparser.c
-    lstate.c
-    lstring.c
-    lstrlib.c
-    ltable.c
-    ltablib.c
-    ltm.c
-    lundump.c
-    lutf8lib.c
-    lvm.c
-    lzio.c
+    src/lapi.c src/lauxlib.c src/lbaselib.c src/lcode.c src/lcorolib.c src/lctype.c
+    src/ldblib.c src/ldebug.c src/ldo.c src/ldump.c src/lfunc.c src/lgc.c src/linit.c
+    src/liolib.c src/llex.c src/lmathlib.c src/lmem.c src/loadlib.c src/lobject.c
+    src/lopcodes.c src/loslib.c src/lparser.c src/lstate.c src/lstring.c src/lstrlib.c
+    src/ltable.c src/ltablib.c src/ltm.c src/lundump.c src/lutf8lib.c src/lvm.c src/lzio.c
 )
 
-target_include_directories(lua PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
+target_include_directories(lua PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-set_target_properties(lua PROPERTIES
-    LINKER_LANGUAGE C
-)
+set_target_properties(lua PROPERTIES LINKER_LANGUAGE C)
 
 if(UNIX AND NOT APPLE)
-    target_link_libraries(lua PUBLIC m)
+    target_link_libraries(lua PUBLIC m dl)
+    target_compile_definitions(lua PRIVATE LUA_USE_LINUX)
 endif()
